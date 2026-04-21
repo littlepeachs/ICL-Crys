@@ -116,8 +116,8 @@ dmypy.json
 *.hdf5
 *.h5
 
-# Data files
-data/
+# Data files (only ignore root data directory, not src/data/)
+/data/
 *.json
 !config.json
 !requirements.txt
