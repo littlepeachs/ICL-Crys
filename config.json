@@ -1,0 +1,61 @@
+{
+  "model": {
+    "name": "Qwen/Qwen2.5-7B-Instruct",
+    "output_dir": "./crystalicl_qwen_output",
+    "use_lora": true,
+    "lora_config": {
+      "rank": 8,
+      "alpha": 32,
+      "dropout": 0.05,
+      "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj"]
+    }
+  },
+
+  "data": {
+    "data_dir": "./data",
+    "train_ratio": 0.8,
+    "val_ratio": 0.1,
+    "test_ratio": 0.1,
+    "random_seed": 42
+  },
+
+  "training": {
+    "num_epochs": 3,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "learning_rate": 5e-4,
+    "warmup_steps": 100,
+    "max_length": 2048,
+    "fp16": false,
+    "bf16": true,
+    "optim": "adamw_torch",
+    "lr_scheduler_type": "cosine"
+  },
+
+  "instruction": {
+    "use_few_shot": true,
+    "k_shot": 3,
+    "include_property_prediction": true,
+    "example_selection_strategy": "condition_structure_based"
+  },
+
+  "tokenization": {
+    "use_sgs": true,
+    "fallback_to_xyz": true
+  },
+
+  "evaluation": {
+    "num_samples": 1000,
+    "metrics": [
+      "success_rate",
+      "validity",
+      "property_distribution"
+    ],
+    "properties": [
+      "formation_energy",
+      "band_gap",
+      "spacegroup",
+      "chemical_formula"
+    ]
+  }
+}
